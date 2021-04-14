@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>Daily Wellness Calculator</title>
+
+<style>
+* {
+    font-size: 24px;
+    font-family: Helvetica;
+}
+body {
+    margin: 3rem;
+}
+h1 {
+    font-size: 2rem;
+}
+h2, h2 > span {
+    font-size: 1.2rem;
+}
+h2 > span {
+    color: green;
+}
+div.formRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+</style>
+
+</head>
+<body>
+    <h1>Daily Wellness Calculator</h1>
+
+    <h2>Your Wellness Score: <span id="totalWellnessScore"></span></h2>
+
+    <form id="activityList">
+        <div class="formRow1">
+            <div>
+                <input type="text" id="wellnessActivity1" name="Activity" required placeholder="Activity" size="20" />
+            </div>
+            <div>
+                <input type="score" id="wellnessScore1" name="Score" required placeholder="Score" size="4" value="1" />
+            </div>
+            <div>
+                <input type="multiplier" id="wellnessMultiplier1" name="Multiplier" placeholder="Quantity" size="4" value="1" />
+            </div>
+            <div>
+                <span id="lineCalculation1">0</span>
+            </div>
+        </div>
+    </form>
+    <button onclick="addItem()">Add Item</button>
+    <button onclick="calcWellnessScore()">Calculate</button>
+
+    <script>
+        let totalWellnessScore = 0
+        let totalWellnessScoreElm = document.getElementById('totalWellnessScore')
+        totalWellnessScoreElm.innerHTML = totalWellnessScore
+
+        function calcWellnessScore() {
+            let wellnessScore = Number(document.getElementById('wellnessScore').value)
+            let wellnessMultiplier = Number(document.getElementById('wellnessMultiplier').value)
+            let wellnessLineScore = wellnessScore * wellnessMultiplier
+            alert(`Wellness Score: ${wellnessLineScore}`)
+            totalWellnessScoreElm.innerHTML = wellnessLineScore
+        }
+
+        function generateNewActivity(rowIdNum) {
+            const activityTemplate = `
+            <div>
+                <input type="text" id="wellnessActivity${rowIdNum}" name="Activity" required placeholder="Activity" size="20" />
+            </div>
+            <div>
+                <input type="score" id="wellnessScore${rowIdNum}" name="Score" required placeholder="Score" size="4" value="1" />
+            </div>
+            <div>
+                <input type="multiplier" id="wellnessMultiplier${rowIdNum}" name="Multiplier" placeholder="Quantity" size="4" value="1" />
+            </div>
+            <div>
+                <span id="lineCalculation">0</span>
+            </div>`
+
+            const activityNode = document.createElement('div')
+            activityNode.className = 'formRow'
+            activityNode.innerHTML = activityTemplate;
+            return activityNode
+        }
+
+        let activityListNode = document.getElementById('activityList')
+        // console.log(activityListNode)
+        // console.log(generateNewRow(2))
+        activityListNode.appendChild(generateNewActivity(2))
+    </script>
+
+</body>
+</html>
